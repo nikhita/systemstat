@@ -1,4 +1,4 @@
-package serverstat
+package systemstat
 
 import (
 	"fmt"

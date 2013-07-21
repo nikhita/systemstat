@@ -1,16 +1,16 @@
-# serverstat
+# systemstat
 
-[Documentation online](http://godoc.org/bitbucket.org/bertimus9/serverstat)
+[Documentation online](http://godoc.org/bitbucket.org/bertimus9/systemstat)
 
-**serverstat** is a package written in Go generated automatically by `gobi`. Happy hacking!
+**systemstat** is a package written in Go generated automatically by `gobi`. Happy hacking!
 
 ## Install (with GOPATH set on your machine)
 ----------
 
-* Step 1: Get the `serverstat` package
+* Step 1: Get the `systemstat` package
 
 ```
-go get bitbucket.org/bertimus9/serverstat
+go get bitbucket.org/bertimus9/systemstat
 ```
 
 * Step 2 (Optional): Run tests
@@ -27,24 +27,24 @@ package main
 import (
   "fmt"
   "os"
-  "bitbucket.org/bertimus9/serverstat"
+  "bitbucket.org/bertimus9/systemstat"
 )
 
 func main() {
-  serverstatExample, err := serverstat.New(1, "gobi")
+  systemstatExample, err := systemstat.New(1, "gobi")
   if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		os.Exit(1)
 	}
 
-  serverstatExample.SetId(serverstatExample.Id() + 1)
-  serverstatExample.SetName(serverstatExample.Name() + " is great")
+  systemstatExample.SetId(systemstatExample.Id() + 1)
+  systemstatExample.SetName(systemstatExample.Name() + " is great")
 
-  fmt.Println(serverstatExample.Id(), serverstatExample.Name())
+  fmt.Println(systemstatExample.Id(), systemstatExample.Name())
   // Output: 2 gobi is great
 }
 ```
 
 ##License
 ----------
-serverstat is MIT licensed.
+systemstat is MIT licensed.
