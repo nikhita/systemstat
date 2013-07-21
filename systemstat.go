@@ -113,7 +113,7 @@ func GetProcCPUAverage(first ProcCPUSample, second ProcCPUSample, procUptime flo
 
 // GetCPUSample takes a snapshot of kernel statistics from the /proc/stat file.
 func GetCPUSample() (samp CPUSample) {
-	return getCPUSample()
+	return getCPUSample("/proc/stat")
 }
 
 // GetProcCPUSample takes a snapshot of kernel statistics from the /proc/stat file.
@@ -123,15 +123,15 @@ func GetProcCPUSample() (samp ProcCPUSample) {
 
 // GetUptime takes a snapshot of load info from the /proc/loadavg file.
 func GetUptime() (samp UptimeSample) {
-	return getUptime()
+	return getUptime("/proc/uptime")
 }
 
 // GetLoadAvgSample takes a snapshot of load info from the /proc/loadavg file.
 func GetLoadAvgSample() (samp LoadAvgSample) {
-	return getLoadAvgSample()
+	return getLoadAvgSample("/proc/loadavg")
 }
 
 // GetMemSample takes a snapshot of memory info from the /proc/meminfo file.
 func GetMemSample() (samp MemSample) {
-	return getMemSample()
+	return getMemSample("/proc/meminfo")
 }

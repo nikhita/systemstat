@@ -11,13 +11,13 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"time"
 	"syscall"
+	"time"
 )
 
-func getUptime() (uptime UptimeSample) {
-	// read in whole loadavg file with cpu usage information
-	contents, err := ioutil.ReadFile("/proc/uptime")
+func getUptime(procfile string) (uptime UptimeSample) {
+	// read in whole uptime file with cpu usage information ;"/proc/uptime"
+	contents, err := ioutil.ReadFile(procfile)
 	uptime.Time = time.Now()
 	if err != nil {
 		return
@@ -36,9 +36,9 @@ func getUptime() (uptime UptimeSample) {
 	return
 }
 
-func getLoadAvgSample() (samp LoadAvgSample) {
-	// read in whole loadavg file with cpu usage information
-	contents, err := ioutil.ReadFile("/proc/loadavg")
+func getLoadAvgSample(procfile string) (samp LoadAvgSample) {
+	// read in whole loadavg file with cpu usage information ;"/proc/loadavg"
+	contents, err := ioutil.ReadFile(procfile)
 	samp.Time = time.Now()
 	if err != nil {
 		return
@@ -65,7 +65,7 @@ func getLoadAvgSample() (samp LoadAvgSample) {
 	return
 }
 
-func getMemSample() (samp MemSample) {
+func getMemSample(procfile string) (samp MemSample) {
 	want := map[string]bool{
 		"Buffers:":   true,
 		"Cached:":    true,
@@ -76,8 +76,8 @@ func getMemSample() (samp MemSample) {
 		"SwapFree:":  true,
 		"SwapUsed:":  true}
 
-	// read in whole meminfo file with cpu usage information
-	contents, err := ioutil.ReadFile("/proc/meminfo")
+	// read in whole meminfo file with cpu usage information ;"/proc/meminfo"
+	contents, err := ioutil.ReadFile(procfile)
 	samp.Time = time.Now()
 	if err != nil {
 		return
@@ -133,9 +133,9 @@ func getProcCPUSample() (s ProcCPUSample) {
 	return
 }
 
-func getCPUSample() (samp CPUSample) {
-	// read in whole proc file with cpu usage information
-	contents, err := ioutil.ReadFile("/proc/stat")
+func getCPUSample(procfile string) (samp CPUSample) {
+	// read in whole proc file with cpu usage information ; "/proc/stat"
+	contents, err := ioutil.ReadFile(procfile)
 	samp.Time = time.Now()
 	if err != nil {
 		return

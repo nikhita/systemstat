@@ -7,7 +7,7 @@ import (
 
 var (
 	msgFail = "%v method fails. Expects %v, returns %v"
-	ex 			= MyserverstatExample{id: 1, name: "foo"}
+	ex      = MyserverstatExample{id: 1, name: "foo"}
 )
 
 func TestNew(t *testing.T) {
@@ -54,7 +54,7 @@ func ExampleNew() {
 	}
 
 	ex.SetId(ex.Id() + 1)
-  ex.SetName(ex.Name() + " is great")
+	ex.SetName(ex.Name() + " is great")
 	fmt.Println(ex.Id(), ex.Name())
 	// Output: 2 gobi is great
 }

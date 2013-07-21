@@ -2,7 +2,14 @@
 
 [Documentation online](http://godoc.org/bitbucket.org/bertimus9/systemstat)
 
-**systemstat** is a package written in Go generated automatically by `gobi`. Happy hacking!
+**systemstat** is a package written in Go generated automatically by `gobi`.
+
+It is a package that allows you to add system statistics to your go program;
+currently polls the linux kernel for CPU usage, free/used memory and swap
+sizes, and uptime for your go process as well as the linux system you're
+running it on, as well as the system load. Can be used to make a crippled
+version of top that monitors the current go process and ignores other processes
+and the number of users with ttys.
 
 ## Install (with GOPATH set on your machine)
 ----------
@@ -16,33 +23,13 @@ go get bitbucket.org/bertimus9/systemstat
 * Step 2 (Optional): Run tests
 
 ```
-$ go test -v ./...
+$ go test -v bitbucket.org/bertimus9/systemstat
 ```
 
 ##Usage
 ----------
 ```
-package main
-
-import (
-  "fmt"
-  "os"
-  "bitbucket.org/bertimus9/systemstat"
-)
-
-func main() {
-  systemstatExample, err := systemstat.New(1, "gobi")
-  if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		os.Exit(1)
-	}
-
-  systemstatExample.SetId(systemstatExample.Id() + 1)
-  systemstatExample.SetName(systemstatExample.Name() + " is great")
-
-  fmt.Println(systemstatExample.Id(), systemstatExample.Name())
-  // Output: 2 gobi is great
-}
+// read in file ../foo.go
 ```
 
 ##License
