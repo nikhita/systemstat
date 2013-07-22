@@ -112,12 +112,15 @@ func main() {
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	go burnCPU()
+	//go burnCPU()
+	//go burnCPU()
+	//go burnCPU()
 
 	for {
 		stats.GatherStats(true)
 		stats.PrintStats()
 
-		printJson(stats, false)
+	//	printJson(stats, false)
 		time.Sleep(3 * time.Second)
 	}
 }
@@ -133,7 +136,7 @@ func printJson(s *stats, indent bool) {
 	} else {
 		dst.Write(b)
 	}
-	//fmt.Println(dst.String())
+	fmt.Println(dst.String())
 	time.Sleep(time.Second * 3)
 }
 
@@ -145,7 +148,7 @@ func burnCPU() {
 		d := 1.0
 		for j := 1; j < 1000; j++ {
 			b *= float64(j)
-			for k := 1; k < 1000000; k++ {
+			for k := 1; k < 700000; k++ {
 
 				c *= float64(k)
 				d = (28 + b*b/3.23412) / math.Sqrt(c*c)
@@ -153,7 +156,6 @@ func burnCPU() {
 			}
 			time.Sleep(500 * time.Nanosecond)
 			runtime.Gosched()
-
 		}
 		time.Sleep(10 * time.Second)
 	}

@@ -7,54 +7,25 @@ import (
 
 var (
 	msgFail = "%v method fails. Expects %v, returns %v"
-	ex      = MyserverstatExample{id: 1, name: "foo"}
 )
 
-func TestNew(t *testing.T) {
-	if exNew, err := New(1, "foo"); err != nil {
-		t.Errorf("%v", err)
-	} else if *exNew != ex {
-		t.Errorf(msgFail, "New", ex, *exNew)
+func TestGetUptime(t *testing.T) {
+	s := getUptime("testdata/uptime")
+	if s.Uptime != 18667.53 {
+		t.Errorf(msgFail, "getUptime", "18667.53", s.Uptime)
 	}
 }
 
-func TestId(t *testing.T) {
-	if id := ex.Id(); id != 1 {
-		t.Errorf(msgFail, "Id", 1, id)
+func TestGetLoadAvgSample(t *testing.T) {
+	s := getLoadAvgSample("testdata/loadavg")
+	fmt.Printf("%#v\n", s)
+	if s.One != 0.1 {
+		t.Errorf(msgFail, "getUptime", "0.1", s.One)
 	}
-}
-
-func TestName(t *testing.T) {
-	if name := ex.Name(); name != "foo" {
-		t.Errorf(msgFail, "Name", "foo", name)
+	if s.Five != 0.15 {
+		t.Errorf(msgFail, "getUptime", "0.15", s.Five)
 	}
-}
-
-func TestSetId(t *testing.T) {
-	ex.SetId(2)
-	if id := ex.Id(); id != 2 {
-		t.Errorf(msgFail, "SetId", 2, id)
+	if s.Fifteen != 0.14 {
+		t.Errorf(msgFail, "getUptime", "0.14", s.Fifteen)
 	}
-}
-
-func TestSetName(t *testing.T) {
-	ex.SetName("bar")
-	if name := ex.Name(); name != "bar" {
-		t.Errorf(msgFail, "SetName", "bar", name)
-	}
-}
-
-func ExampleNew() {
-	id := 1
-	name := "gobi"
-	ex, err := New(id, name)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-
-	ex.SetId(ex.Id() + 1)
-	ex.SetName(ex.Name() + " is great")
-	fmt.Println(ex.Id(), ex.Name())
-	// Output: 2 gobi is great
 }
