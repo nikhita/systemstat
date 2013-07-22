@@ -1,7 +1,3 @@
-// Copyright (c) 2013 Phillip Bond
-// Licensed under the MIT License
-// see file LICENSE
-
 # systemstat
 
 [Documentation online](http://godoc.org/bitbucket.org/bertimus9/systemstat)
@@ -56,4 +52,10 @@ func main() {
 
 ##License
 ----------
-systemstat is MIT licensed.
+
+Copyright (c) 2013 Phillip Bond
+
+Licensed under the MIT License
+
+see file LICENSE
+
