@@ -124,7 +124,7 @@ func main() {
 		stats.GatherStats(true)
 		stats.PrintStats()
 
-	//	printJson(stats, false)
+		//	printJson(stats, false)
 		time.Sleep(3 * time.Second)
 	}
 }

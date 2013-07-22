@@ -8,12 +8,14 @@
 
 **systemstat** is a package written in Go generated automatically by `gobi`.
 
-It is a package that allows you to add system statistics to your go program;
+**systemstat** allows you to add system statistics to your go program; it
 currently polls the linux kernel for CPU usage, free/used memory and swap
-sizes, and uptime for your go process as well as the linux system you're
-running it on, as well as the system load. Can be used to make a crippled
-version of top that monitors the current go process and ignores other processes
-and the number of users with ttys.
+sizes, and uptime for your go process, as well as the system you're running it
+on, and the system load. It can be used to make a crippled version of top that
+monitors the current go process and ignores other processes and the number of
+users with ttys. See the examples directory for go-top.go, which is my attempt
+at a top clone. Bear in mind that the intention of **systemstat** is to allow
+your process to monitor itself and it's environment, not to replace top.
 
 ## Install (with GOPATH set on your machine)
 ----------
