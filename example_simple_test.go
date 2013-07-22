@@ -1,6 +1,7 @@
-// Copyright
+// Copyright (c) 2013 Phillip Bond
+// Licensed under the MIT License
+// see file LICENSE
 
-// This example is blah blah
 package systemstat_test
 
 import (

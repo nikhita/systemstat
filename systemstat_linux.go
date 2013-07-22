@@ -1,3 +1,7 @@
+// Copyright (c) 2013 Phillip Bond
+// Licensed under the MIT License
+// see file LICENSE
+
 // +build linux
 
 package systemstat
