@@ -30,11 +30,11 @@ $ go test -v bitbucket.org/bertimus9/systemstat
 
 * Step 3 (Optional): Run example
 
-
-    $ cd <first directory in your $GOPATH
-    $ cd src/bitbucket.org/bertimus9/systemstat
-    $ go run examples/go-top.go
-	
+```bash
+$ cd <first directory in your $GOPATH
+$ cd src/bitbucket.org/bertimus9/systemstat
+$ go run examples/go-top.go
+```
 
 ##Usage
 ----------
