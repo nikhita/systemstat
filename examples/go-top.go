@@ -4,15 +4,42 @@
 
 package main
 
+// go-top
+//
+// A sample program that emulates the way gnu top gets most of its
+// information.  It does not get information about other processes, just the
+// calling process.
+//
+// To demonstrate how the output changes, you can invoke with the
+// -coresToPeg=N option. For example:
+//
+//   go run go-top.go -coresToPeg=2
+//
+// will run two concurrent infinte loops and max out up to two cores (assuming
+// you have more than one core). Note that the loops are not tuned to always
+// hit 100% on all machines, but they get close. Also note that each core you
+// want to max out will add up to 100% CPU usage to this process, but you will
+// get less than 100% per core if there are other processes using the CPU, or
+// if the kernel is suffering high load averages, etc.
+//
+// %CCPU measures cumulative CPU usage. It is useful when you have a daemon
+// that only runs periodically, but does intense calculations. You can use
+// long sample times, on the order of minutes, but still get an accurate
+// measure of how much CPU time has been used over the life of the process,
+// even if your samples occur when the CPU is temporarily idle.
+
 import (
 	"bitbucket.org/bertimus9/systemstat"
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"math"
 	"runtime"
 	"time"
 )
+
+var coresToPegPtr *int64
 
 type stats struct {
 	startTime time.Time
@@ -74,12 +101,17 @@ func (s *stats) PrintStats() {
 
 	fmt.Println("************************************************************")
 	if s.ProcCPUAvg.PossiblePct > 0 {
+		cpuHelpText := "[see -help flag to change %cpu]"
+		if *coresToPegPtr > 0 {
+			cpuHelpText = ""
+		}
 		fmt.Printf("ProcessName\tRES(k)\t%%CPU\t%%CCPU\t%%MEM\n")
-		fmt.Printf("this-process\t%d\t%3.1f\t%2.1f\t%3.1f\n",
+		fmt.Printf("this-process\t%d\t%3.1f\t%2.1f\t%3.1f\t%s\n",
 			s.CurProcCPUSample.ProcMemUsedK,
 			s.ProcCPUAvg.TotalPct,
 			100*s.CurProcCPUSample.Total/s.ProcUptime/float64(1),
-			100*float64(s.CurProcCPUSample.ProcMemUsedK)/float64(s.SysMemK.MemTotal))
+			100*float64(s.CurProcCPUSample.ProcMemUsedK)/float64(s.SysMemK.MemTotal),
+			cpuHelpText)
 		fmt.Println("%CCPU is cumulative CPU usage over this process' life.")
 		fmt.Printf("Max this-process CPU possible: %3.f%%\n", s.ProcCPUAvg.PossiblePct)
 	}
@@ -112,18 +144,31 @@ func (s *stats) GatherStats(percent bool) {
 }
 
 func main() {
+	// get command line flags
+	coresToPegPtr = flag.Int64("coresToPeg", 0, "how many CPU cores would you like to artificially peg to 100% usage")
+
+	flag.Parse()
+
+	// this will help us poll the OS to get system statistics
 	stats := NewStats()
 
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	go burnCPU()
-	//go burnCPU()
-	//go burnCPU()
-	//go burnCPU()
+
+	// WARNING: each call to burnCPU() will peg one core
+	// of your machine to 100%
+	// If you have code you'd like to drop in to this example,
+	// just run "go yourCode()" instead of "go burnCPU()
+	for i := *coresToPegPtr; i > 0; i-- {
+		fmt.Println("pegging one more CPU core.")
+		go burnCPU()
+	}
 
 	for {
 		stats.GatherStats(true)
 		stats.PrintStats()
 
+		// This next line lets out see the jsonified object
+		// produced by systemstat
 		//	printJson(stats, false)
 		time.Sleep(3 * time.Second)
 	}
