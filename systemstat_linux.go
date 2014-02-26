@@ -153,9 +153,12 @@ func getCPUSample(procfile string) (samp CPUSample) {
 		}
 
 		fields := strings.Fields(string(line))
-		fieldName := fields[0]
-		if fieldName == "cpu" {
-			parseCPUFields(fields, &samp)
+
+		if len(fields) > 0 {
+			fieldName := fields[0]
+			if fieldName == "cpu" {
+				parseCPUFields(fields, &samp)
+			}
 		}
 	}
 	return
